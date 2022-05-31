@@ -15,6 +15,7 @@
     "chai": "^4.3.6",
     "ethereum-waffle": "^3.4.4",
     "ethers": "^5.6.8",
+    "hardhat": "^2.9.7",
     "react": "^18.0.0",
     "react-bootstrap": "^2.2.3",
     "react-dom": "^18.0.0",
@@ -43,9 +44,6 @@
   },
   "description": "### **Welcome!** To get started with this course, clone this repo and follow these commands:",
   "main": "hardhat.config.js",
-  "devDependencies": {
-    "hardhat": "^2.9.3"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thepadurean/waveportal-starter-project.git"
