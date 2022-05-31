@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+.idea/buildspace.iml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+cache/solidity-files-cache.json
+artifacts/*
+hardhat.config.js
+package-lock.json
+src/utils/WavePortal.json
+yarn.lock
