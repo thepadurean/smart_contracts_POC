@@ -1,15 +1,20 @@
 .mainContainer {
-  display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 64px;
+  margin-top: 30px;
 }
 
 .dataContainer {
+  padding-top: 20px;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50%;
+  height: 50%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 1200px;
+  margin: auto;
+  flex-wrap: wrap;
+  align-content: stretch;
+  align-items: center;
 }
 
 .header {
@@ -20,9 +25,15 @@
 }
 
 .bio {
+  background-color: #FFFFFF;
   text-align: center;
   color: gray;
-  margin-top: 16px;
+  margin-top: 10px;
+  height:400px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
 }
 
 .waveButton {
@@ -34,7 +45,7 @@
 }
 
 body {
-  background-color: #7cc6fe;
+  background-color: rgb(255, 255, 255);
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -52,3 +63,22 @@ body {
   justify-content: space-evenly;
 }
 
+.selfOperations{
+  width: 45%;
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px, rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px;
+  border-radius: 24px;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #7cc6fe;
+}
+
+.foreignOperation{
+  width: 45%;
+  box-shadow: rgba(0, 0, 0, 0.01) 0px 0px 1px, rgba(0, 0, 0, 0.04) 0px 4px 8px, rgba(0, 0, 0, 0.04) 0px 16px 24px, rgba(0, 0, 0, 0.01) 0px 24px 32px;
+  border-radius: 24px;
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #7cc6fe;
+}

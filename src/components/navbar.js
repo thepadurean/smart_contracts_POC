@@ -77,7 +77,7 @@ const Navbar = (props) => {
     return (
         <nav className="navigation">
             <a href="/" className="logo-button">
-                The Wave Company
+                The Digital Bank
             </a>
             <button
                 className="hamburger"
