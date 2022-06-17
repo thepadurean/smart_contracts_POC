@@ -102,7 +102,7 @@ const Navbar = (props) => {
 
     function ConnectButton(props) {
         return (
-            <button onClick={props.onClick}>
+            <button onClick={props.onClick} className="connectButton">
                 Connect Wallet
             </button>
         );
@@ -110,7 +110,7 @@ const Navbar = (props) => {
 
     function AddressButton(props) {
         return (
-            <button className="emphasis">
+            <button className="emphasis connectButton">
                 {props.account}
             </button>
         );

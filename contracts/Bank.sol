@@ -18,9 +18,10 @@ contract Bank {
 
     constructor() payable {
         console.log("Contract Initialised");
+        console.log("Contract balance: %d",address(this).balance);
     }
     
-    function deposit() public payable {
+    function deposit() external payable {
         accountBankBalance[msg.sender] += msg.value;
         transferHistory.push(accountTransfers(msg.sender, msg.sender, "SELF-DEPOSIT", msg.value, block.timestamp));
         console.log("Deposit successful, current balance: %d ",address(this).balance);
@@ -41,6 +42,7 @@ contract Bank {
         accountBankBalance[msg.sender] -= withdrawAmount;
 
         payable(msg.sender).transfer(withdrawAmount);
+        transferHistory.push(accountTransfers(msg.sender,msg.sender, "SELF-WITHDRAW", withdrawAmount, block.timestamp));
         console.log("Successfully withdrew amount: %d, current bank balance: %d",withdrawAmount,address(this).balance);
     }
 
@@ -50,6 +52,10 @@ contract Bank {
 
     function getAllTransfers() public view returns (accountTransfers[] memory) {
         return transferHistory;
+    }
+
+    function contractBalance() public view returns(uint) {
+        return address(this).balance;
     }
 
 }

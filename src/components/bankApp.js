@@ -5,6 +5,9 @@ import abi from "../abis/Bank.json";
 import TransactionModal from './TransactionModal'
 import {useAppContext} from "./context";
 import Navbar from "./navbar";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import BasicTabs from "./operationsPanel.tsx";
+import {getBankContract,getContractAddress} from "./bankContract";
 
 const BankApp = () => {
     const Web3 = require('web3');
@@ -20,7 +23,7 @@ const BankApp = () => {
     // const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
     //testnest address
-    const contractAddress = "0x36C02dA8a0983159322a80FFE9F24b1acfF8B570";
+    const contractAddress = getContractAddress();
 
     
     const contractABI = abi.abi;
@@ -35,77 +38,13 @@ const BankApp = () => {
         waveCount,
         setWaveCount,
         account,
-        setAccount
+        setAccount,
+        contractData, 
+        setContractData
     } = useAppContext();
 
     useEffect(() => {
-        getAllTransactions();
     }, [])
-    
-
-    const getAllTransactions = async () => {
-        const transactions = await bankContract.getAllTransfers();
-        console.log(transactions);
-        let transactionsCleaned = [];
-        transactions.forEach(transaction => {
-          transactionsCleaned.push({
-            depositingAccount: transaction.depositingAccount,
-            depositorAccount: transaction.depositorAccount,
-            timestamp: new Date(transaction.timestamp * 1000),
-            message: transaction.depositMessage,
-            value: ethers.utils.formatEther(transaction.depositAmount) 
-          });
-        });
-        setAllTransactions(transactionsCleaned);
-    }
-
-    const withdraw = async () => {
-        try{
-            const withdrawTx = await bankContract.withdraw(message);
-            console.log("Mining...", withdrawTx.hash);
-            await withdrawTx.wait();
-            console.log("Mined -- ", withdrawTx.hash);
-            let content="";
-            setModalContent(content);
-        }catch (error) {
-            setVisibility(true);
-            setContextData({error: error, error_code: error.code, error_message: error.message});
-        }
-    }
-
-    const deposit = async () => {
-        try{
-            const depositTx = await bankContract.deposit(provider.utils.parseEther(changeAmount));
-            console.log("Mining...", depositTx.hash);
-            await depositTx.wait();
-            console.log("Mined -- ", depositTx.hash);
-            let content="";
-            setModalContent(content);
-        }catch (error) {
-            setVisibility(true);
-            setContextData({error: error, error_code: error.code, error_message: error.message});
-        } 
-    }
-
-    const depositTo = async () => {
-        try{
-            const depositToTx = await bankContract.depositTo(depositAccount,changeMessage, provider.utils.parseEther(changeAmount));
-            console.log("Mining...", depositToTx.hash);
-            await depositToTx.wait();
-            console.log("Mined -- ", depositToTx.hash);
-            let content="";
-            setModalContent(content);
-        }catch (error) {
-            setVisibility(true);
-            setContextData({error: error, error_code: error.code, error_message: error.message});
-        }
-    }
-
-    const setModalContent = async (content) => {
-        setVisibility(true);
-        setContextData(content);
-        getAllTransactions();
-    }
 
     const changeDepositAccount = (event) => {
         setDepositAccount(event.target.value);
@@ -124,7 +63,7 @@ const BankApp = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
       }
-
+    
     return (
         <>
             <Navbar/>
@@ -133,52 +72,7 @@ const BankApp = () => {
                         <h1>Welcome to the digital bank!</h1>
                     </div>
                 <div className="dataContainer">
-                
-                    <div className="selfOperations">
-                        <h1> SELF-OPERATIONS </h1>
-                        <div className="selfOperationDeposit">
-                            <form onSubmit={handleSubmit}>
-                                <label>
-                                    Message: <input type="text" value={message} onChange={changeMessage} />
-                                    Amount: <input type="text" value={amount} onChange={changeAmount} />
-                                </label>
-                                <input className="depositToAccount" type="submit" value="Deposit Money" />
-                            </form>
-                        </div>
-                        <div className="selfOperationWithdraw">
-                        <form onSubmit={handleSubmit}>
-                            <label>
-                                Amount: <input type="text" value={amount} onChange={changeAmount} />
-                            </label>
-                            <input className="depositToAccount" type="submit" value="Withdraw Money" />
-                        </form>
-                        </div>
-                    </div>
-                    <div className="foreignOperation">
-                        <h1> ADDRESS DEPOSIT </h1>
-                        <div className="foreignOperationSend">
-                        <form onSubmit={handleSubmit}>
-                            <label>
-                                Deposit To: <input type="text" value={depositAccount} onChange={changeDepositAccount} />
-                                Message: <input type="text" value={message} onChange={changeMessage} />
-                                Amount: <input type="text" value={amount} onChange={changeAmount} />
-                            </label>
-                            <input className="depositToAccount" type="submit" value="Deposit Money" />
-                        </form>
-                        </div>
-                    </div>
-
-                    {allTransactions.slice(0).reverse().map((transaction, index) => {
-                        return (
-                            <div key={index} style={{ backgroundColor: "OldLace", marginTop: "16px", padding: "8px" }}>
-                                <div>Sender Address: {transaction.depositingAccount}</div>
-                                <div>Receiving Address: {transaction.depositorAccount}</div>
-                                <div>Time: {transaction.timestamp.toString()}</div>
-                                <div>Message: {transaction.depositMessage}</div>
-                                <div>Amount: {transaction.value}</div>
-                            </div>
-                        )
-                    })}
+                    <BasicTabs />
                 </div>
             </div>
             <TransactionModal/>

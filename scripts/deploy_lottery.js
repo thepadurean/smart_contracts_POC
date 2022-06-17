@@ -22,21 +22,21 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const bankContract = await hre.ethers.getContractFactory("Bank");
+  const lotteryContract = await hre.ethers.getContractFactory("Lottery");
 
   // Deploy it with an initial 0.001 ETH balance
-  const bankContractObject = await bankContract.deploy({
-    value: hre.ethers.utils.parseEther("0.1"),
+  const lotteryContractObject = await lotteryContract.deploy({
+    value: hre.ethers.utils.parseEther("10"),
   });
 
   // Await for the blockchain to confirm deployment
-  await bankContractObject.deployed();
+  await lotteryContractObject.deployed();
 
-  let currentBalance=await web3.eth.getBalance(bankContractObject.address);
+  let currentBalance=await web3.eth.getBalance(lotteryContractObject.address);
   // Contract successfully deployed to contract address
   console.log("Contract deployed by:", owner.address);
-  console.log("Bank deployed to:", bankContractObject.address);
-  console.log(`Bank balance in ETH: ${ethers.utils.formatEther(currentBalance)} ETH`);
+  console.log("Lottery deployed to:", lotteryContractObject.address);
+  console.log(`Lottery balance in ETH: ${ethers.utils.formatEther(currentBalance)} ETH`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
