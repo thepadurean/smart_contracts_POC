@@ -225,8 +225,6 @@ const main = async () => {
       console.log(`Listing transfer, FROM: ${transfer.depositingAccount}, TO: ${transfer.depositorAccount}, 
       MESSAGE: ${transfer.depositMessage}, AMOUNT: ${ethers.utils.formatEther(transfer.depositAmount)}, TIMESTAMP: ${new Date(transfer.timestamp*1000)}`);
     })
-
-
   };
   
   const getBankBalance = async (bankContractObject) => {
