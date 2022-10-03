@@ -18,7 +18,7 @@ describe.only("Bank balance", function () {
         randomConnectedToContract=bankContractDeployed.connect(randomPerson);
     });
 
-    it("Should return the correct balance after deployment", async function () {
+    it("Should return the correct balance after deployment ", async function () {
         expect(await  bankContractDeployed.contractBalance()).to.equal(hre.ethers.utils.parseEther("0.1"));
     });
 

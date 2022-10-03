@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import "../style/App.css";
 import {ethers, utils} from 'ethers';
-import abi from "../abis/Bank.json";
+import abi from "../abis/bankContractAbi.json";
 import TransactionModal from './TransactionModal'
 import {useAppContext} from "./context";
 import Navbar from "./navbar";

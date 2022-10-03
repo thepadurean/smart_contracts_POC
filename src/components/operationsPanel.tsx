@@ -9,6 +9,11 @@ import "../style/App.css";
 import {useAppContext} from "./context";
 import getBankContract from "./bankContract";
 import {ethers, utils} from 'ethers';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 interface TabPanelProps {
@@ -71,8 +76,26 @@ export default function BasicTabs() {
   let renderedArray: {} | null | undefined=[];
   let bankContract=getBankContract();
 
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
-  
+    if (account && !isLoaded) {
+      updateBankBalance();
+      updatePersonalBalance();
+      getAllTransactions();
+      setIsLoaded(true);
+    }
   });
 
   /* @ts-ignore */
@@ -145,8 +168,16 @@ export default function BasicTabs() {
         updatePersonalBalance();
         handleReset();
         getAllTransactions();
-    }catch (error) {
-console.log(error);
+    }catch (error) {   
+       // @ts-ignore: Object is of type 'unknown'
+      if(error.hasOwnProperty("data")){
+         // @ts-ignore: Object is of type 'unknown'
+        setErrorMessage(error.data.message);
+         // @ts-ignore: Object is of type 'unknown'
+        console.log(error.data.message);
+      }
+      handleClickOpen();
+
     }
   }
   
@@ -217,10 +248,6 @@ async function updatePersonalBalance(){
   }
 }
 
-async function updateLotteryBalance(){
-
-}
-
   return (
     <Box sx={{ width: '100%' }}>
           <Box
@@ -244,7 +271,7 @@ async function updateLotteryBalance(){
       >
        <p>CURRENT BANK BALANCE: {bankBalance}</p>
        <p>PERSONAL BALANCE: {personalBalance}</p>
-       <p>LOTTERY BALANCE: {lotteryBalance}</p>
+       {/* <p>LOTTERY BALANCE: {lotteryBalance}</p> */}
 
       </Box>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -301,7 +328,7 @@ async function updateLotteryBalance(){
             <TextField
               onChange={onDepositingAccountChange}
               value={depositingAccount}
-              label={"Account to deposit to"} //optional
+              label={"Account to deposit to"} 
               className="materialUiInput"
               InputProps={{
                 inputProps: {
@@ -313,7 +340,7 @@ async function updateLotteryBalance(){
             <TextField
               onChange={onDepositingMessage}
               value={depositingMessage}
-              label={"Attach a message"} //optional
+              label={"Attach a message"}
               className="materialUiInput"
               InputProps={{
                 inputProps: {
@@ -334,6 +361,25 @@ async function updateLotteryBalance(){
         {/* @ts-ignore */}
         {transactions}
       </TabPanel>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Error"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          {errorMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Ok, I'm sorry I lied</Button>
+        </DialogActions>
+      </Dialog>
     </Box>
+    
   );
 }

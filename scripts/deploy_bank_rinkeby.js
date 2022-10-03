@@ -49,6 +49,7 @@ async function deploy() {
   //get the balance of the deployed contract
   let currentBalance=await provider.getBalance(bankContractObject.address);
   console.log(`Bank balance in ETH: ${ethers.utils.formatEther(currentBalance)} ETH`);
+  console.log("Rinkeby testnet etherscan URL is: "+"https://rinkeby.etherscan.io/address/"+bankContractObject.address)
   return true;
 }
 
@@ -131,7 +132,6 @@ const getBankBalance = async (bankContractObject) => {
 const runMain = async () => {
   try {
     await deploy();
-    await runInit();
     process.exit(0);
   } catch (error) {
     console.error(error);
