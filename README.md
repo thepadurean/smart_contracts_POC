@@ -10,4 +10,9 @@ Clone this repo and follow these commands:
 5. Run `npx hardhat run scripts/deploy_bank.js --network localhost` to deploy the bank contract on your localhost Ethereum network
 6. You now have a working React project with a smart contract attached to it.
 
+OR
+
+1. docker-compose up -d
+2. Open the application
+
 Hacksheet with CLI commands and explanations: https://docs.google.com/document/d/1EvSwOGUQf6jSdrlWo3n8hXZ2NlZt9Lcin-3g2ANyEo0/edit?usp=sharing
