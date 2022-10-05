@@ -11,3 +11,4 @@ hardhat.config.js
 package-lock.json
 src/utils/WavePortal.json
 yarn.lock
+.idea/*

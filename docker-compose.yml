@@ -1,16 +1,10 @@
-version: '3.7'
-
+version: '3.2'
 services:
-
-  sample:
-    container_name: sample
+  bank-app:
     build:
       context: .
-      dockerfile: Dockerfile
-    volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      dockerfile: 'Dockerfile'
     ports:
-      - 3001:3000
-    environment:
-      - CHOKIDAR_USEPOLLING=true
+      - '3000:3000'
+    volumes:
+      - ./:/frontend
